@@ -1,0 +1,16 @@
+/
+├── index.html              ← NUOVA Landing Page (condivisibile)
+├── app.html                ← La tua app (rinomina index.html originale)
+├── poster-golden-premium.jpg
+├── manifest.json           ← Aggiornato con "start_url": "app.html"
+├── service-worker.js       ← Aggiornato con app.html
+└── icons/
+    ├── icon-72.png
+    ├── icon-96.png
+    ├── icon-128.png
+    ├── icon-144.png
+    ├── icon-152.png
+    ├── icon-180.png
+    ├── icon-192.png
+    ├── icon-384.png
+    └── icon-512.png

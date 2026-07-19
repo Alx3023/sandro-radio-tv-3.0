@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SANDRO RADIO TV - Premium Edition</title>
+    
+    <!-- Meta per social (OG) - Fondamentali per WhatsApp, Instagram, Facebook -->
+    <meta property="og:title" content="SANDRO RADIO TV - Premium Edition" />
+    <meta property="og:description" content="📺 La tua TV e Radio smart personale con canali TV e Radio italiane. Scarica ora!" />
+    <meta property="og:image" content="https://alx3023.github.io/SANDRO-RADIOTV-smart-edition-3.0/poster-golden-premium.jpg" />
+    <meta property="og:url" content="https://alx3023.github.io/SANDRO-RADIOTV-smart-edition-3.0/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SANDRO RADIO TV" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SANDRO RADIO TV - Premium Edition" />
+    <meta name="twitter:description" content="📺 La tua TV e Radio smart personale con canali TV e Radio italiane." />
+    <meta name="twitter:image" content="https://alx3023.github.io/SANDRO-RADIOTV-smart-edition-3.0/poster-golden-premium.jpg" />
+    
+    <!-- Favicon e PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png" />
+    
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('✅ Service Worker registrato'))
+                .catch(err => console.log('❌ SW:', err));
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 16px;
+        }
+        
+        .landing {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .poster-link {
+            display: block;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(229, 9, 20, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            text-decoration: none;
+            touch-action: manipulation;
+        }
+        .poster-link:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 80px rgba(229, 9, 20, 0.4);
+        }
+        .poster-link:active {
+            transform: scale(0.96);
+        }
+        .poster-link img {
+            display: block;
+            width: 100%;
+            height: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            pointer-events: none;
+        }
+        
+        .premium-badge {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 6px 20px;
+            background: linear-gradient(135deg, #e50914, #b2070f);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .landing-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 16px;
+            letter-spacing: -0.5px;
+        }
+        .landing-title span {
+            background: linear-gradient(135deg, #fff, #e50914);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .landing-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #e50914, #b2070f);
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(229, 9, 20, 0.4);
+            width: 100%;
+            max-width: 320px;
+            touch-action: manipulation;
+            animation: pulse 2.5s infinite;
+        }
+        .download-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 15px rgba(229, 9, 20, 0.3);
+        }
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 30px rgba(229, 9, 20, 0.4); }
+            50% { box-shadow: 0 4px 50px rgba(229, 9, 20, 0.7); }
+        }
+        
+        .store-badges {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .store-badge {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 8px 16px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        .store-badge:active {
+            transform: scale(0.95);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .footer {
+            margin-top: 24px;
+            color: rgba(255,255,255,0.2);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 480px) {
+            .landing-title { font-size: 18px; }
+            .download-btn { font-size: 16px; padding: 14px 28px; }
+        }
+        
+        .redirecting {
+            display: none;
+            margin-top: 10px;
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+        }
+        .redirecting.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .app-installed-msg {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: rgba(52, 199, 89, 0.15);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            border-radius: 12px;
+            color: #34C759;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .app-installed-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="landing" id="landingPage">
+    
+    <!-- IMMAGINE CLICCABILE -->
+    <a href="app.html" class="poster-link" id="posterLink" aria-label="Apri SANDRO RADIO TV">
+        <img 
+            src="poster-golden-premium.jpg" 
+            alt="SANDRO RADIO TV - Premium Edition - Scarica ora" 
+            loading="eager"
+            width="500"
+            height="auto"
+        />
+    </a>
+    
+    <div class="premium-badge">✦ PREMIUM EDITION</div>
+    
+    <h1 class="landing-title">
+        <span>SANDRO RADIO TV</span>
+    </h1>
+    <p class="landing-desc">
+        📺 La tua TV e Radio smart personale<br />
+        Canali TV e Radio italiane in un click
+    </p>
+    
+    <!-- PULSANTE SCARICA -->
+    <a href="app.html" class="download-btn" id="downloadBtn">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        <span>📲 Avvia l'App</span>
+    </a>
+    
+    <div class="app-installed-msg" id="appInstalledMsg">
+        ✅ App già installata • Reindirizzamento in corso...
+    </div>
+    
+    <div class="redirecting" id="redirectingIndicator">
+        ⏳ Reindirizzamento automatico...
+    </div>
+    
+    <div class="store-badges">
+        <span class="store-badge">📱 PWA</span>
+        <span class="store-badge">🔄 Aggiornato</span>
+        <span class="store-badge">🇮🇹 Italia</span>
+    </div>
+    
+    <div class="footer">
+        SANDRO RADIO TV &bull; smart edition
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // 1. DETECT APP INSTALLATA
+    // ============================================
+    let isAppInstalled = false;
+    
+    // iOS - standalone mode
+    if (window.navigator && window.navigator.standalone) {
+        isAppInstalled = true;
+        document.getElementById('appInstalledMsg').classList.add('show');
+        setTimeout(() => { window.location.href = 'app.html'; }, 1000);
+    }
+    
+    // Android/Chrome - display mode
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        isAppInstalled = true;
+        document.getElementById('appInstalledMsg').classList.add('show');
+        setTimeout(() => { window.location.href = 'app.html'; }, 1000);
+    }
+    
+    // Service Worker check
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistration('/')
+            .then(reg => {
+                if (reg && reg.active) {
+                    isAppInstalled = true;
+                    document.getElementById('appInstalledMsg').classList.add('show');
+                    setTimeout(() => {
+                        window.location.href = 'app.html';
+                    }, 1500);
+                }
+            })
+            .catch(() => {});
+    }
+    
+    // ============================================
+    // 2. SALVA FONTE DI PROVENIENZA
+    // ============================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+    if (source) {
+        sessionStorage.setItem('sandro_source', source);
+        console.log('📊 Provenienza:', source);
+    }
+    sessionStorage.setItem('sandro_from_landing', 'true');
+    
+    // ============================================
+    // 3. GESTIONE CLICK
+    // ============================================
+    function goToApp(e) {
+        if (e) e.preventDefault();
+        document.getElementById('redirectingIndicator').classList.add('show');
+        setTimeout(() => {
+            window.location.href = 'app.html';
+        }, 200);
+    }
+    
+    // Click sull'immagine
+    document.getElementById('posterLink').addEventListener('click', goToApp);
+    
+    // Click sul pulsante
+    document.getElementById('downloadBtn').addEventListener('click', goToApp);
+    
+    // Click su tutto il body (solo se non è su un link o badge)
+    document.body.addEventListener('click', function(e) {
+        if (!e.target.closest('a') && !e.target.closest('button') && !e.target.closest('.store-badge')) {
+            goToApp(e);
+        }
+    });
+    
+    // ============================================
+    // 4. KEYBOARD SHORTCUT
+    // ============================================
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            goToApp(e);
+        }
+    });
+    
+    console.log('🚀 SANDRO RADIO TV - Landing Page');
+    console.log('📱 Condividi questo link:', window.location.href);
+    console.log('📊 Fonte:', source || 'diretta');
+</script>
+
+</body>
+</html>
